@@ -54,7 +54,44 @@ cd <project-directory>
 
 ### 2. Database Setup
 
-#### Install PostgreSQL
+#### Option A: Using Docker (Recommended)
+
+**Install Docker:**
+
+- Download and install Docker Desktop from [docker.com](https://www.docker.com/products/docker-desktop)
+
+**Run PostgreSQL with Docker:**
+
+```bash
+# Pull and run PostgreSQL container
+docker run --name crm-postgres \
+  -e POSTGRES_USER=myuser \
+  -e POSTGRES_PASSWORD=mypassword \
+  -e POSTGRES_DB=crm_db \
+  -p 5432:5432 \
+  -d postgres:14
+
+# Verify the container is running
+docker ps
+
+# To stop the container
+docker stop crm-postgres
+
+# To start the container again
+docker start crm-postgres
+
+# To remove the container (WARNING: deletes all data)
+docker rm -f crm-postgres
+```
+
+**Access PostgreSQL in Docker:**
+
+```bash
+# Connect to PostgreSQL inside the container
+docker exec -it crm-postgres psql -U myuser -d crm_db
+```
+
+#### Option B: Install PostgreSQL Locally
 
 **macOS (using Homebrew):**
 
@@ -71,7 +108,7 @@ sudo apt install postgresql postgresql-contrib
 sudo systemctl start postgresql
 ```
 
-#### Create Database and User
+**Create Database and User (if not using Docker):**
 
 ```bash
 # Access PostgreSQL
